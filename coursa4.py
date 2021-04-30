@@ -87,6 +87,14 @@ def print_version(ctx, param, value):
     click.echo(VERSION)
     ctx.exit()
 
+def expl_msg(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    while(1):
+        click.echo(os.system(get_setting(PATH, "STRINGS", "default_pub_string") + ' \"' +
+            get_setting(PATH, "STRINGS", "default_expl_topic") + '\" ' +
+            get_setting(PATH, "STRINGS", "default_expl_msg")))
+    ctx.exit()
 
 @click.command()
 @click.option(
@@ -100,6 +108,9 @@ def print_version(ctx, param, value):
 @click.option(
     '--v', is_flag=True, callback=print_version,
     expose_value=False, is_eager=True, help='Get tool\'s version'
+)
+@click.option(
+    '--expl', is_flag=True, callback=expl_msg, expose_value=False, is_eager=True, help='Wtf'
 )
 
 def main():
