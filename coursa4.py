@@ -16,6 +16,9 @@ def create_config(path):
     config.set("LOG_PATHS", "LOG_SNIFFING", "Sources/Logs/Logs_sniff.txt")
     config.add_section("STRINGS")
     config.set("STRINGS", "DEFAULT_SUB_STRING", 'mosquitto_sub -h "test.mosquitto.org" -p "1883" -t')
+    config.set("STRINGS", "DEFAULT_PUB_STRING", 'mosquitto_pub - h "test.mosquitto.org" - p "1883" - t')
+    config.set("STRINGS", "DEFAULT_EXPL_TOPIC", 'digitransit')
+    config.set("STRINGS", "DEFAULT_EXPL_MSG", '-m {"@type": "TransportationRoute", "operator": {"@type": "Organization", "idLocal": 6},"vehicle": {"@type": "Vehicle", "idLocal": 464,"location": {"@type": "Location", "latitude": 69.69, "longitude": 69.69}}}')
 
     with open(path, "w") as config_file:
         config.write(config_file)
