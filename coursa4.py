@@ -97,7 +97,6 @@ def expl_msg(ctx, param, value):
         click.echo(os.system(get_setting(PATH, "STRINGS", "default_pub_string") + ' \"' +
             get_setting(PATH, "STRINGS", "default_expl_topic") + '\" ' +
             get_setting(PATH, "STRINGS", "default_expl_msg")))
-    ctx.exit()
 
 @click.command()
 @click.option(
