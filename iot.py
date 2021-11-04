@@ -1,7 +1,9 @@
 import argparse
 import json
+import os
 import random
 import time
+import click
 
 #                                   Практическая 7
 """
@@ -44,24 +46,37 @@ def read_data():
                                     Доп. задание 2
 """
 
+def generate_data():
+    for x in range(1, 5):
+        data = {"motion": int(random.random()) * x, "temperature": random.random() * x,
+                "voltage": random.random() * x,
+                "timestamp": random.random() * x}
+        jsonstring = json.dumps(data)
+        return jsonstring
 
 def emulate_data():
     while 1:
         try:
-            for x in range(1, 5):
-                data = {"motion": int(random.random() * x), "temperature": random.random() * x,
-                        "voltage": random.random() * x,
-                        "timestamp": random.random() * x}
-                jsonstring = json.dumps(data)
-                print(jsonstring)
-                time.sleep(0.4)
+            print(generate_data())
+            time.sleep(0.4)
         except (KeyboardInterrupt):
             exit("Передача данных остановлена")
 
 
 #                                   Практическая 7
 
+def publish_emulatedData():
+    while 1:
+        try:
+            click.echo(os.system(f"sudo mosquitto_pub -h \"192.168.2.230\" -p \"1883\" -t \""
+                             f"/we/are/legion/\" -m \"{generate_data()}\""))
+            time.sleep(1)
+        except (KeyboardInterrupt):
+            exit("Передача данных остановлена")
+
+
 if __name__ == '__main__':
     # catch_data()
     # read_data()
-    emulate_data()
+    #emulate_data()
+    publish_emulatedData()
